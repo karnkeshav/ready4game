@@ -1,0 +1,22 @@
+{
+  "classes": [
+    {
+      "id": "class_9",
+      "name": "Class 9",
+      "subjects": [
+        {
+          "id": "math",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "quadrilaterals",
+              "name": "Quadrilaterals Quest",
+              "description": "Master the properties of 4-sided figures!",
+              "is_locked": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

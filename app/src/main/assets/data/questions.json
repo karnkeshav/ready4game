@@ -1,0 +1,47 @@
+{
+  "chapter_id": "quadrilaterals",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "basic",
+      "text": "Which of the following properties is true for a parallelogram?",
+      "options": [
+        "Diagonals are equal",
+        "Opposite sides are equal",
+        "All angles are 90 degrees",
+        "Only one pair of opposite sides is parallel"
+      ],
+      "correct_index": 1,
+      "relevant_theorem_id": "theorem_1",
+      "hint": "Think about the side lengths."
+    },
+    {
+      "id": "q2",
+      "type": "application",
+      "text": "If one side of a parallelogram is 8cm and the adjacent side is 6cm, what is the perimeter?",
+      "options": [
+        "14cm",
+        "28cm",
+        "24cm",
+        "16cm"
+      ],
+      "correct_index": 1,
+      "relevant_theorem_id": "theorem_1",
+      "hint": "Perimeter is the sum of all sides. Opposite sides are equal."
+    },
+    {
+      "id": "q3",
+      "type": "theorem_based",
+      "text": "In a rhombus, the diagonals intersect at what angle?",
+      "options": [
+        "45 degrees",
+        "60 degrees",
+        "90 degrees",
+        "180 degrees"
+      ],
+      "correct_index": 2,
+      "relevant_theorem_id": "theorem_2",
+      "hint": "The diagonals are perpendicular."
+    }
+  ]
+}

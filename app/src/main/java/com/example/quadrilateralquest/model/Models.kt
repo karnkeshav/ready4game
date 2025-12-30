@@ -108,7 +108,13 @@ data class SanctumQuest(
     val type: String, // "cryptex_input", "assertion_reason"
     @SerializedName("question_text") val questionText: String?,
     @SerializedName("correct_value") val correctValue: String?,
+
+    // Updated fields for Assertion-Reasoning & Multiple Choice
     @SerializedName("assertion") val assertion: String?,
     @SerializedName("reason") val reason: String?,
+    val options: List<String>?,
+    @SerializedName("correct_option_index") val correctOptionIndex: Int?,
+    val explanation: String?,
+
     @SerializedName("xp_reward") val xpReward: Int
 )

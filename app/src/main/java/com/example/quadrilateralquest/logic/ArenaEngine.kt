@@ -55,6 +55,32 @@ class ArenaEngine {
         if (maxBossHealth == 0) return 0f
         return currentBossHealth.toFloat() / maxBossHealth.toFloat()
     }
+
+    // Returns the XP earned if correct, or 0 if wrong
+    fun submitSanctumAnswer(quest: com.example.quadrilateralquest.model.SanctumQuest, userAnswer: String): Int {
+        var isCorrect = false
+
+        if (quest.type == "cryptex_input") {
+            // Normalize string (trim spaces, ignore case)
+            if (userAnswer.trim().equals(quest.correctValue?.trim(), ignoreCase = true)) {
+                isCorrect = true
+            }
+        } else if (quest.type == "assertion_reason") {
+            // User answer is expected to be the index "0", "1", etc.
+            val index = userAnswer.toIntOrNull()
+            if (index != null && index == quest.correctOptionIndex) {
+                isCorrect = true
+            }
+        }
+
+        return if (isCorrect) {
+            sessionScore += quest.xpReward
+            quest.xpReward
+        } else {
+            sessionErrors++
+            0
+        }
+    }
 }
 
 enum class BossState { ALIVE, DEFEATED }

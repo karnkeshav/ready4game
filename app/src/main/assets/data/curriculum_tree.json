@@ -1,0 +1,319 @@
+{
+  "curriculum_version": "1.0",
+  "meta": {
+    "description": "Master Index for Quadrilateral Quest & Education Realm",
+    "generated_for": "CBSE K-12"
+  },
+  "boards": [
+    {
+      "id": "cbse",
+      "name": "CBSE",
+      "classes": [
+        {
+          "id": "class_6",
+          "name": "Class 6",
+          "realms": [
+            {
+              "id": "sci_6",
+              "name": "Science",
+              "sub_realms": [
+                {
+                  "name": "The Discovery of Science",
+                  "chapters": [
+                    { "id": "c6_s_food", "name": "Food: Where does it come from?", "file_ref": "content/science/class6/food_source.json" },
+                    { "id": "c6_s_magnets", "name": "Fun with Magnets", "file_ref": "content/science/class6/magnets.json" },
+                    { "id": "c6_s_elec", "name": "Electricity and Circuits", "file_ref": "content/science/class6/electricity.json" },
+                    { "id": "c6_s_light", "name": "Light, Shadows and Reflections", "file_ref": "content/science/class6/light.json" },
+                    { "id": "c6_s_motion", "name": "Motion and Measurement", "file_ref": "content/science/class6/motion.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math_6",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "The Origin of Numbers",
+                  "chapters": [
+                    { "id": "c6_m_know", "name": "Knowing Our Numbers", "file_ref": "content/math/class6/knowing_numbers.json" },
+                    { "id": "c6_m_int", "name": "Integers", "file_ref": "content/math/class6/integers.json" },
+                    { "id": "c6_m_frac", "name": "Fractions", "file_ref": "content/math/class6/fractions.json" }
+                  ]
+                },
+                {
+                  "name": "The First Shapes",
+                  "chapters": [
+                    { "id": "c6_m_geo", "name": "Basic Geometrical Ideas", "file_ref": "content/math/class6/basic_geometry.json" },
+                    { "id": "c6_m_mens", "name": "Mensuration", "file_ref": "content/math/class6/mensuration.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "hum_6",
+              "name": "Humanities",
+              "sub_realms": [
+                {
+                  "name": "History & Civics",
+                  "chapters": [
+                    { "id": "c6_h_what", "name": "What, Where, How and When?", "file_ref": "content/humanities/class6/intro_history.json" },
+                    { "id": "c6_civ_gov", "name": "What is Government?", "file_ref": "content/humanities/class6/government.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_7",
+          "name": "Class 7",
+          "realms": [
+            {
+              "id": "sci_7",
+              "name": "Science",
+              "sub_realms": [
+                {
+                  "name": "Physics (Energy & Motion)",
+                  "chapters": [
+                    { "id": "c7_p_heat", "name": "Heat", "file_ref": "content/science/class7/heat.json" },
+                    { "id": "c7_p_motion", "name": "Motion and Time", "file_ref": "content/science/class7/motion_time.json" },
+                    { "id": "c7_p_elec", "name": "Electric Current and its Effects", "file_ref": "content/science/class7/electric_current.json" },
+                    { "id": "c7_p_light", "name": "Light", "file_ref": "content/science/class7/light.json" }
+                  ]
+                },
+                {
+                  "name": "Chemistry (Matter & Change)",
+                  "chapters": [
+                    { "id": "c7_c_acids", "name": "Acids, Bases and Salts", "file_ref": "content/science/class7/acids_bases.json" },
+                    { "id": "c7_c_changes", "name": "Physical and Chemical Changes", "file_ref": "content/science/class7/chemical_changes.json" }
+                  ]
+                },
+                {
+                  "name": "Biology (Life & Environment)",
+                  "chapters": [
+                    { "id": "c7_b_nut_plant", "name": "Nutrition in Plants", "file_ref": "content/science/class7/nutrition_plants.json" },
+                    { "id": "c7_b_nut_anim", "name": "Nutrition in Animals", "file_ref": "content/science/class7/nutrition_animals.json" },
+                    { "id": "c7_b_weather", "name": "Weather, Climate & Adaptations", "file_ref": "content/science/class7/weather_climate.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math_7",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "The Numeric Expansion",
+                  "chapters": [
+                    { "id": "c7_m_int", "name": "Integers", "file_ref": "content/math/class7/integers.json" },
+                    { "id": "c7_m_frac", "name": "Fractions and Decimals", "file_ref": "content/math/class7/fractions.json" },
+                    { "id": "c7_m_simple", "name": "Simple Equations", "file_ref": "content/math/class7/simple_equations.json" }
+                  ]
+                },
+                {
+                  "name": "The Geometric Builders",
+                  "chapters": [
+                    { "id": "c7_m_lines", "name": "Lines and Angles", "file_ref": "content/math/class7/lines_angles.json" },
+                    { "id": "c7_m_tri", "name": "The Triangle and its Properties", "file_ref": "content/math/class7/triangles.json" },
+                    { "id": "c7_m_cong", "name": "Congruence of Triangles", "file_ref": "content/math/class7/congruence.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "hum_7",
+              "name": "Humanities",
+              "sub_realms": [
+                {
+                  "name": "History (Our Pasts II)",
+                  "chapters": [
+                    { "id": "c7_h_kings", "name": "New Kings and Kingdoms", "file_ref": "content/humanities/class7/new_kings.json" },
+                    { "id": "c7_h_delhi", "name": "The Delhi Sultans", "file_ref": "content/humanities/class7/delhi_sultans.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_8",
+          "name": "Class 8",
+          "realms": [
+            {
+              "id": "math_8",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "The Numeric Foundation",
+                  "chapters": [
+                    { "id": "c8_m_rational", "name": "Rational Numbers", "file_ref": "content/math/class8/rational_numbers.json" },
+                    { "id": "c8_m_linear", "name": "Linear Equations", "file_ref": "content/math/class8/linear_equations.json" },
+                    { "id": "c8_m_quads", "name": "Understanding Quadrilaterals", "file_ref": "content/math/class8/quadrilaterals.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "sci_8",
+              "name": "Science",
+              "sub_realms": [
+                {
+                  "name": "Physics",
+                  "chapters": [
+                    { "id": "c8_p_force", "name": "Force and Pressure", "file_ref": "content/science/class8/force_pressure.json" },
+                    { "id": "c8_p_sound", "name": "Sound", "file_ref": "content/science/class8/sound.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_9",
+          "name": "Class 9",
+          "realms": [
+            {
+              "id": "math_9",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "The Shapelands (Geometry)",
+                  "chapters": [
+                    { "id": "c9_m_lines", "name": "Lines & Angles", "file_ref": "content/math/class9/lines_angles.json" },
+                    { "id": "c9_m_tri", "name": "Triangles", "file_ref": "content/math/class9/triangles.json" },
+                    { "id": "c9_m_quad", "name": "Quadrilaterals", "file_ref": "content/math/class9/quadrilaterals.json" },
+                    { "id": "c9_m_circles", "name": "Circles", "file_ref": "content/math/class9/circles.json" }
+                  ]
+                },
+                {
+                  "name": "The Numeric Cosmos",
+                  "chapters": [
+                    { "id": "c9_m_num", "name": "Number Systems", "file_ref": "content/math/class9/number_systems.json" },
+                    { "id": "c9_m_poly", "name": "Polynomials", "file_ref": "content/math/class9/polynomials.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "sci_9",
+              "name": "Science",
+              "sub_realms": [
+                {
+                  "name": "Physics",
+                  "chapters": [
+                    { "id": "c9_p_motion", "name": "Motion", "file_ref": "content/science/class9/motion.json" },
+                    { "id": "c9_p_force", "name": "Force and Laws of Motion", "file_ref": "content/science/class9/force.json" },
+                    { "id": "c9_p_grav", "name": "Gravitation", "file_ref": "content/science/class9/gravitation.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_10",
+          "name": "Class 10",
+          "realms": [
+            {
+              "id": "math_10",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "The Equation Battlefield",
+                  "chapters": [
+                    { "id": "c10_m_quad", "name": "Quadratic Equations", "file_ref": "content/math/class10/quadratic_equations.json" },
+                    { "id": "c10_m_ap", "name": "Arithmetic Progressions", "file_ref": "content/math/class10/arithmetic_progressions.json" }
+                  ]
+                },
+                {
+                  "name": "Trigonometric Peaks",
+                  "chapters": [
+                    { "id": "c10_m_trig", "name": "Introduction to Trigonometry", "file_ref": "content/math/class10/trigonometry.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "sci_10",
+              "name": "Science",
+              "sub_realms": [
+                {
+                  "name": "Realm of Light (Physics)",
+                  "chapters": [
+                    { "id": "c10_p_light", "name": "Light – Reflection and Refraction", "file_ref": "content/science/class10/light.json" },
+                    { "id": "c10_p_human", "name": "Human Eye and Colourful World", "file_ref": "content/science/class10/human_eye.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_11",
+          "name": "Class 11",
+          "realms": [
+            {
+              "id": "phy_11",
+              "name": "Physics",
+              "sub_realms": [
+                {
+                  "name": "Mechanics",
+                  "chapters": [
+                    { "id": "c11_p_units", "name": "Units and Measurements", "file_ref": "content/physics/class11/units.json" },
+                    { "id": "c11_p_motion", "name": "Motion in a Straight Line", "file_ref": "content/physics/class11/motion.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math_11",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "Pure Mathematics",
+                  "chapters": [
+                    { "id": "c11_m_sets", "name": "Sets", "file_ref": "content/math/class11/sets.json" },
+                    { "id": "c11_m_rel", "name": "Relations and Functions", "file_ref": "content/math/class11/relations.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "class_12",
+          "name": "Class 12",
+          "realms": [
+            {
+              "id": "phy_12",
+              "name": "Physics",
+              "sub_realms": [
+                {
+                  "name": "Electromagnetism",
+                  "chapters": [
+                    { "id": "c12_p_charges", "name": "Electric Charges and Fields", "file_ref": "content/physics/class12/charges.json" },
+                    { "id": "c12_p_curr", "name": "Current Electricity", "file_ref": "content/physics/class12/current.json" }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "math_12",
+              "name": "Mathematics",
+              "sub_realms": [
+                {
+                  "name": "Calculus Mastery",
+                  "chapters": [
+                    { "id": "c12_m_integ", "name": "Integrals", "file_ref": "content/math/class12/integrals.json" },
+                    { "id": "c12_m_diff", "name": "Differential Equations", "file_ref": "content/math/class12/diff_equations.json" }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

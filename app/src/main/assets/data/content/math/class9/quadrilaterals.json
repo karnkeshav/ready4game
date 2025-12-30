@@ -1,0 +1,123 @@
+{
+  "chapter_id": "c9_m_quad",
+  "meta": {
+    "title": "Quadrilateral Quest",
+    "version": "1.0",
+    "description": "Master the properties of 4-sided shapes to defeat the Prism Construct.",
+    "learning_outcomes": ["Angle Sum Property", "Types of Quadrilaterals", "Mid-Point Theorem"]
+  },
+  "prodigy_link": {
+    "prerequisite_chapter_id": "c8_m_quads",
+    "bridge_concept": "Polygons and Angle Sum Basics"
+  },
+  "zone_1_arcade": {
+    "description": "The Shapelands - Concept Building",
+    "levels": [
+      {
+        "level_id": 1,
+        "title": "Shape Shifter",
+        "type": "match_3",
+        "instruction": "Match 3 properties to form the shape.",
+        "data": {
+          "grid_size": 5,
+          "targets": [
+            { "id": "prop_opp_equal", "text": "Opposite Sides Equal", "matches_with": "Parallelogram" },
+            { "id": "prop_all_90", "text": "All Angles 90°", "matches_with": "Rectangle" },
+            { "id": "prop_all_equal", "text": "All Sides Equal", "matches_with": "Rhombus" }
+          ]
+        }
+      },
+      {
+        "level_id": 2,
+        "title": "The Hidden Geometrician",
+        "type": "hidden_object",
+        "instruction": "Find objects in the room that represent specific quadrilaterals.",
+        "data": {
+          "scene_image": "room_scene_01",
+          "objects_to_find": [
+            { "shape": "Trapezium", "object_name": "Table Lamp Shade" },
+            { "shape": "Square", "object_name": "Floor Tile" }
+          ]
+        }
+      },
+      {
+        "level_id": 3,
+        "title": "Transversal Runner",
+        "type": "runner",
+        "instruction": "Swipe left/right to hit the correct angle property.",
+        "data": {
+          "speed": "medium",
+          "obstacles": [
+            { "question": "Consecutive Angles in Parallelogram sum to...", "correct": "180°", "wrong": "90°" },
+            { "question": "Diagonals of a Rhombus intersect at...", "correct": "90°", "wrong": "60°" }
+          ]
+        }
+      }
+    ]
+  },
+  "zone_2_miniboss": {
+    "boss_name": "The Prism Construct",
+    "description": "A golem made of shifting glass plates. Apply theorems to shatter its armor.",
+    "unlock_requirement": "Complete Zone 1",
+    "health": 1000,
+    "stages": [
+      {
+        "stage_id": 1,
+        "mechanic": "shield_break",
+        "narrative": "The Construct raises a Parallelogram Shield. It claims angle A is 100°. What is angle B?",
+        "question_type": "mcq_timed",
+        "question": "If Angle A = 100° in a Parallelogram, find Angle B (consecutive).",
+        "options": ["80°", "100°", "90°", "180°"],
+        "correct_answer": "80°",
+        "damage_deal": 200,
+        "hint_cost": 50
+      },
+      {
+        "stage_id": 2,
+        "mechanic": "weak_point",
+        "narrative": "The Construct exposes its core (Mid-Point). Connect the mid-points to trap it!",
+        "question_type": "interactive_drag",
+        "data": {
+          "canvas_shape": "Triangle ABC",
+          "task": "Drag line from Midpoint of AB to Midpoint of AC."
+        },
+        "correct_logic": "line_parallel_to_base",
+        "damage_deal": 400
+      }
+    ]
+  },
+  "zone_3_sanctum": {
+    "title": "The Scribe's Sanctum",
+    "description": "Deep Focus Mode. Pen and Paper required. No Grimoire allowed.",
+    "unlock_requirement": "Defeat The Prism Construct",
+    "access_key_cost": "3 Rare Runes",
+    "quests": [
+      {
+        "quest_id": "iit_found_01",
+        "type": "cryptex_input",
+        "difficulty": "hard",
+        "question_text": "In a quadrilateral ABCD, the angles are in ratio 3:5:9:13. Find the smallest angle.",
+        "input_label": "Enter Value (Degrees)",
+        "correct_value": "36",
+        "logic_step": "3x+5x+9x+13x = 360 -> 30x=360 -> x=12 -> 3*12=36",
+        "xp_reward": 500
+      },
+      {
+        "quest_id": "iit_found_02",
+        "type": "assertion_reason",
+        "difficulty": "expert",
+        "assertion": "The diagonals of a rectangle bisect each other at right angles.",
+        "reason": "A rectangle is a parallelogram.",
+        "options": [
+          "Both True and Reason is correct explanation",
+          "Both True but Reason is NOT correct explanation",
+          "Assertion False, Reason True",
+          "Assertion True, Reason False"
+        ],
+        "correct_option_index": 2,
+        "explanation": "Diagonals of a rectangle bisect each other but NOT necessarily at 90 degrees. That is a property of a Rhombus/Square.",
+        "xp_reward": 700
+      }
+    ]
+  }
+}

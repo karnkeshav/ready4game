@@ -15,6 +15,7 @@ fun AppNavigation(repository: ContentRepository, gameManager: GameManager) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = "index") {
+        // Module 1: Gateway
         composable("index") {
             IndexScreen(navController, repository)
         }
@@ -24,27 +25,13 @@ fun AppNavigation(repository: ContentRepository, gameManager: GameManager) {
         composable("chapter_selection") {
             ChapterSelectionScreen(navController, repository)
         }
+        
+        // Placeholder for Login (Optional for now)
         composable("login") {
             LoginScreen(navController)
         }
-        composable("dashboard") {
-            DashboardScreen(navController, gameManager)
-        }
-        composable("theorem_mastery/{theoremId}") { backStackEntry ->
-            val theoremId = backStackEntry.arguments?.getString("theoremId")
-            TheoremMasteryScreen(navController, theoremId, repository, gameManager)
-        }
-        composable("activity") {
-            InteractiveActivityScreen(navController, gameManager)
-        }
-        composable("quiz") {
-            QuizScreen(navController, repository, gameManager)
-        }
-        composable("leaderboard") {
-            LeaderboardScreen(navController, gameManager)
-        }
-        
-        // Fixed: Moved inside NavHost
+
+        // Module 3: The Arena (The New Game Loop)
         composable("game_arena/{fileRef}") { backStackEntry ->
             val fileRef = backStackEntry.arguments?.getString("fileRef") ?: ""
             val decodedRef = try {
@@ -58,5 +45,8 @@ fun AppNavigation(repository: ContentRepository, gameManager: GameManager) {
                 onBack = { navController.popBackStack() }
             )
         }
+
+        // REMOVED: dashboard, theorem_mastery, activity, quiz, leaderboard
+        // These relied on old data structures that no longer exist.
     }
 }

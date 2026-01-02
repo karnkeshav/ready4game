@@ -1,0 +1,80 @@
+{
+  "chapter_id": "c9_m_tri",
+  "meta": {
+    "title": "Triangles: The Trinity Peaks",
+    "description": "Master Congruence Rules (SAS, ASA, SSS) to align the peaks.",
+    "learning_outcomes": ["Theorem 7.1 (ASA)", "Theorem 7.2 (Angles opp. equal sides)", "RHS Rule"]
+  },
+  "stage_1_shaper_lab": {
+    "title": "The Congruence Lab",
+    "description": "Superimpose triangles to prove they are identical.",
+    "levels": [
+      {
+        "level_id": "lvl_sas_intro",
+        "title": "The SAS Lock",
+        "mechanic_type": "elastic_drag",
+        "instruction": "Adjust Triangle DEF to match Triangle ABC using Side-Angle-Side.",
+        "data": {
+          "initial_shape": [
+            {"id": "D", "x": 10, "y": 10, "is_locked": true},
+            {"id": "E", "x": 60, "y": 10, "is_locked": false},
+            {"id": "F", "x": 35, "y": 60, "is_locked": false}
+          ],
+          "win_condition": "congruence_overlap"
+        }
+      }
+    ]
+  },
+  "stage_2_fractal_forge": {
+    "title": "The Isosceles Forge",
+    "description": "Construct equal sides to stabilize the bridge.",
+    "levels": [
+      {
+        "level_id": "lvl_iso_1",
+        "title": "The Balanced Peak",
+        "mechanic_type": "midpoint_build",
+        "instruction": "Construct the altitude from Vertex A. Verify it bisects Base BC.",
+        "data": {
+          "target_points": ["midpoint_BC"]
+        }
+      }
+    ]
+  },
+  "stage_3_proof_arena": {
+    "title": "The Logic Gate",
+    "description": "Defeat the Guardian of Inequality.",
+    "levels": [
+      {
+        "level_id": "boss_rhs",
+        "title": "The Right-Angle Sentinel",
+        "mechanic_type": "proof_defense",
+        "instruction": "The Sentinel has a 90-degree shield and equal hypotenuse.",
+        "data": {
+          "narrative_intro": "Guardian: 'Two sides are equal, but I am not congruent!'",
+          "enemy_weakness": "rhs_rule"
+        }
+      }
+    ]
+  },
+  "stage_4_hyper_loop": {
+    "title": "The Trinity Run",
+    "duration_seconds": 300,
+    "obstacles": [
+      {
+        "prompt": "Two angles and included side equal!",
+        "correct_gate": "ASA Rule",
+        "wrong_gates": ["SAS Rule", "SSS Rule"]
+      }
+    ]
+  },
+  "stage_5_sanctum": {
+    "title": "The Scroll of SAS",
+    "exercises": [
+      {
+        "exercise_ref": "Ex 7.1 Q1",
+        "task": "Prove AC bisects Angle A.",
+        "tool_required": "bisector_marker"
+      }
+    ]
+  }
+}

@@ -182,7 +182,7 @@
                   "chapters": [
                     { "id": "c9_m_lines", "name": "Lines & Angles", "file_ref": "content/math/class9/lines_angles.json" },
                     { "id": "c9_m_tri", "name": "Triangles", "file_ref": "content/math/class9/triangles.json" },
-                    { "id": "c9_m_quad", "name": "Quadrilaterals", "file_ref": "content/math/class9/quadrilaterals.json" },
+                    { "id": "c9_m_quad_v2", "name": "Quadrilaterals: The Crystalline Dimensions", "file_ref": "content/math/class9/quadrilaterals.json" },
                     { "id": "c9_m_circles", "name": "Circles", "file_ref": "content/math/class9/circles.json" }
                   ]
                 },

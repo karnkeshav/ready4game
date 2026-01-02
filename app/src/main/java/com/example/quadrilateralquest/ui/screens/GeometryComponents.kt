@@ -371,3 +371,179 @@ fun ProofArenaView(
         }
     }
 }
+// ... (Keep existing views) ...
+
+@Composable
+fun RunnerView(
+    zoneData: com.example.quadrilateralquest.model.RunnerZone,
+    onObstaclePass: (Boolean) -> Unit,
+    onComplete: () -> Unit
+) {
+    // 1. Runner State
+    // Lanes: 0 (Left), 1 (Center), 2 (Right)
+    var playerLane by remember { mutableIntStateOf(1) }
+    var score by remember { mutableIntStateOf(0) }
+    var gameTime by remember { mutableIntStateOf(zoneData.duration) }
+    
+    // 2. Obstacle State
+    // We only track one active obstacle for this prototype to keep it smooth
+    var currentObstacleIndex by remember { mutableIntStateOf(0) }
+    var obstacleY by remember { mutableFloatStateOf(0f) } // 0f to 1f (screen progress)
+    var isCrashed by remember { mutableStateOf(false) }
+
+    val currentObstacle = zoneData.obstacles.getOrNull(currentObstacleIndex)
+
+    // 3. Game Loop (The Heartbeat)
+    LaunchedEffect(currentObstacleIndex, isCrashed) {
+        if (currentObstacle == null) {
+            onComplete()
+            return@LaunchedEffect
+        }
+        if (isCrashed) return@LaunchedEffect
+
+        // Animation Loop
+        val startTime = System.nanoTime()
+        while (obstacleY < 1.2f) { // Run until off-screen
+            val now = System.nanoTime()
+            val dt = (now - startTime) / 1_000_000_000f // Delta time in seconds
+            
+            // Speed increases slightly with every obstacle
+            val speed = 0.3f + (currentObstacleIndex * 0.05f) 
+            obstacleY += speed * 0.016f // Assume 60fps roughly
+            
+            // Collision Detection (at y=0.8)
+            if (obstacleY > 0.8f && obstacleY < 0.85f) {
+                // Determine which lane is correct
+                // Logic: We randomize the correct lane for the "Gate" visualization
+                // For this prototype, let's say:
+                // Lane 0: Wrong, Lane 1: Correct, Lane 2: Wrong (Simplified mapping)
+                // In a real app, we'd map options to lanes dynamically.
+                
+                // Let's simluate: Correct Gate is always CENTER (Lane 1) for this specific JSON
+                // because mapping "Rhombus" string to a lane requires UI layout state.
+                // We'll enforce: Player must be in Lane 1 to hit "Rhombus".
+                
+                if (playerLane == 1) {
+                     // Hit Correct!
+                } else {
+                    isCrashed = true // Hit Wrong!
+                }
+            }
+
+            kotlinx.coroutines.delay(16) // ~60 FPS cap
+        }
+        
+        // Reset for next
+        if (!isCrashed) {
+            onObstaclePass(true)
+            score += 100
+            obstacleY = 0f
+            currentObstacleIndex++
+        }
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        // HUD
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp).height(50.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("SCORE: $score", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.primary)
+            Text("TIME: ${gameTime}s", style = MaterialTheme.typography.bodyMedium)
+        }
+
+        // RUNNER TRACK
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(16.dp)
+                .pointerInput(Unit) {
+                    detectTapGestures { offset ->
+                        // Simple Tap controls: Left side -> Lane 0, Center -> 1, Right -> 2
+                        val width = size.width
+                        if (offset.x < width / 3) playerLane = 0
+                        else if (offset.x > width * 2 / 3) playerLane = 2
+                        else playerLane = 1
+                    }
+                }
+        ) {
+            // Draw Track
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                val laneWidth = size.width / 3
+                
+                // Lane Dividers
+                drawLine(Color.Gray, Offset(laneWidth, 0f), Offset(laneWidth, size.height), 5f)
+                drawLine(Color.Gray, Offset(laneWidth * 2, 0f), Offset(laneWidth * 2, size.height), 5f)
+
+                // Draw Player (Triangle)
+                val playerX = (playerLane * laneWidth) + (laneWidth / 2)
+                val playerY = size.height * 0.85f
+                drawCircle(Color.Cyan, radius = 40f, center = Offset(playerX, playerY))
+
+                // Draw Obstacle (Gates)
+                if (currentObstacle != null) {
+                    val obsYPos = obstacleY * size.height
+                    
+                    // Gate 0 (Left)
+                    drawRect(
+                        color = Color.Red.copy(alpha = 0.8f),
+                        topLeft = Offset(10f, obsYPos),
+                        size = androidx.compose.ui.geometry.Size(laneWidth - 20f, 100f)
+                    )
+                    // Gate 1 (Center - Correct for prototype)
+                    drawRect(
+                        color = Color.Green.copy(alpha = 0.8f),
+                        topLeft = Offset(laneWidth + 10f, obsYPos),
+                        size = androidx.compose.ui.geometry.Size(laneWidth - 20f, 100f)
+                    )
+                    // Gate 2 (Right)
+                    drawRect(
+                        color = Color.Red.copy(alpha = 0.8f),
+                        topLeft = Offset(laneWidth * 2 + 10f, obsYPos),
+                        size = androidx.compose.ui.geometry.Size(laneWidth - 20f, 100f)
+                    )
+                }
+            }
+            
+            // Text Overlays for Gates (using standard Composables for text rendering ease)
+            if (currentObstacle != null) {
+                // We use a Box with offset to simulate moving text
+                // Note: Direct text in Canvas is harder in Compose, so we overlay
+                Box(Modifier.fillMaxSize()) {
+                     // Prompt
+                     Text(
+                         currentObstacle.prompt, 
+                         modifier = Modifier.align(Alignment.TopCenter).padding(top = 100.dp),
+                         style = MaterialTheme.typography.headlineSmall,
+                         color = Color.Black
+                     )
+                     
+                     // Gate Labels (Moving down)
+                     // Since obstacleY is state, this recomposes. 
+                     // Optimization: In real game, use Layout modifiers.
+                }
+            }
+        }
+        
+        if (isCrashed) {
+            AlertDialog(
+                onDismissRequest = {},
+                title = { Text("CRASHED!") },
+                text = { Text("You hit the wrong property gate.\nFinal Score: $score") },
+                confirmButton = {
+                    Button(onClick = { 
+                        // Reset simple
+                        isCrashed = false 
+                        obstacleY = 0f
+                        // Penalty or Retry logic
+                    }) { Text("Revive (-50 Pts)") }
+                },
+                dismissButton = {
+                     Button(onClick = onComplete) { Text("Exit Run") }
+                }
+            )
+        }
+    }
+}

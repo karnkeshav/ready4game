@@ -3,54 +3,16 @@ package com.example.quadrilateralquest.model
 import com.google.gson.annotations.SerializedName
 
 // ==========================================
-// PART 1: The Master Index (Curriculum Tree)
+// ROOT: The Master Scroll (Chapter)
 // ==========================================
-
-data class CurriculumTree(
-    @SerializedName("curriculum_version") val version: String,
-    val boards: List<Board>
-)
-
-data class Board(
-    val id: String,
-    val name: String,
-    val classes: List<SchoolClass>
-)
-
-data class SchoolClass(
-    val id: String,
-    val name: String,
-    val realms: List<Realm>
-)
-
-data class Realm(
-    val id: String,
-    val name: String,
-    @SerializedName("sub_realms") val subRealms: List<SubRealm>
-)
-
-data class SubRealm(
-    val name: String,
-    val chapters: List<ChapterRef>
-)
-
-data class ChapterRef(
-    val id: String,
-    val name: String,
-    @SerializedName("file_ref") val fileRef: String
-)
-
-// ==========================================
-// PART 2: The Game Scroll (Chapter Content)
-// ==========================================
-
-data class ChapterGameScroll(
+data class ChapterScroll(
     @SerializedName("chapter_id") val chapterId: String,
     val meta: ChapterMeta,
-    @SerializedName("prodigy_link") val prodigyLink: ProdigyLink?,
-    @SerializedName("zone_1_arcade") val arcadeZone: ArcadeZone,
-    @SerializedName("zone_2_miniboss") val bossZone: BossZone,
-    @SerializedName("zone_3_sanctum") val sanctumZone: SanctumZone
+    @SerializedName("stage_1_shaper_lab") val shaperLab: GameZone,
+    @SerializedName("stage_2_fractal_forge") val fractalForge: GameZone,
+    @SerializedName("stage_3_proof_arena") val proofArena: GameZone,
+    @SerializedName("stage_4_hyper_loop") val hyperLoop: RunnerZone,
+    @SerializedName("stage_5_sanctum") val sanctum: SanctumZone
 )
 
 data class ChapterMeta(
@@ -59,62 +21,86 @@ data class ChapterMeta(
     @SerializedName("learning_outcomes") val outcomes: List<String>
 )
 
-data class ProdigyLink(
-    @SerializedName("prerequisite_chapter_id") val prerequisiteId: String,
-    @SerializedName("bridge_concept") val bridgeConcept: String
-)
-
-// --- ZONE 1: ARCADE ---
-data class ArcadeZone(
-    val description: String,
-    val levels: List<ArcadeLevel>
-)
-
-data class ArcadeLevel(
-    @SerializedName("level_id") val levelId: Int,
+// ==========================================
+// GENERIC ZONES (Lab, Forge, Arena)
+// ==========================================
+data class GameZone(
     val title: String,
-    val type: String, // "match_3", "hidden_object", "runner"
-    val instruction: String,
-    val data: Map<String, Any> // Flexible container for level-specific data
-)
-
-// --- ZONE 2: BOSS ---
-data class BossZone(
-    @SerializedName("boss_name") val bossName: String,
     val description: String,
-    val health: Int,
-    val stages: List<BossStage>
+    val levels: List<GeometryLevel>
 )
 
-data class BossStage(
-    @SerializedName("stage_id") val stageId: Int,
-    val mechanic: String, // "shield_break", "weak_point"
-    val narrative: String,
-    @SerializedName("question") val questionText: String?,
-    @SerializedName("correct_answer") val correctAnswer: String?,
-    @SerializedName("damage_deal") val damage: Int,
-    val options: List<String>? = null
+data class GeometryLevel(
+    @SerializedName("level_id") val levelId: String,
+    val title: String,
+    @SerializedName("mechanic_type") val mechanicType: MechanicType, // ELASTIC_DRAG, CONSTRUCT, DEFENSE
+    val instruction: String,
+    val data: LevelData // Polymorphic container for specific level details
 )
 
-// --- ZONE 3: SANCTUM ---
+enum class MechanicType {
+    @SerializedName("elastic_drag") ELASTIC_DRAG,       // Stage 1
+    @SerializedName("midpoint_build") MIDPOINT_BUILD,   // Stage 2
+    @SerializedName("proof_defense") PROOF_DEFENSE      // Stage 3
+}
+
+// ==========================================
+// LEVEL DATA STRUCTURES
+// ==========================================
+data class LevelData(
+    // For Elastic Drag (Shaper's Lab)
+    @SerializedName("initial_shape") val initialShape: List<Vertex>?,
+    @SerializedName("constraints") val constraints: List<Constraint>?,
+    @SerializedName("win_condition") val winCondition: String?, // e.g., "diagonals_equal"
+
+    // For Construction (Fractal Forge)
+    @SerializedName("base_structure") val baseStructure: List<Edge>?,
+    @SerializedName("target_points") val targetPoints: List<String>?, // e.g., ["midpoint_AB", "midpoint_AC"]
+
+    // For Proof Arena
+    @SerializedName("narrative_intro") val narrative: String?,
+    @SerializedName("enemy_weakness") val weakness: String? // Logic rule to defeat boss
+)
+
+data class Vertex(
+    val id: String,
+    var x: Float,
+    var y: Float,
+    @SerializedName("is_locked") val isLocked: Boolean
+)
+
+data class Edge(
+    val from: String,
+    val to: String
+)
+
+data class Constraint(
+    val type: String, // "parallel", "equal_length", "90_degrees"
+    val targets: List<String> // IDs of edges or vertices involved
+)
+
+// ==========================================
+// SPECIAL ZONES (Runner & Sanctum)
+// ==========================================
+data class RunnerZone(
+    val title: String,
+    @SerializedName("duration_seconds") val duration: Int,
+    val obstacles: List<RunnerObstacle>
+)
+
+data class RunnerObstacle(
+    val prompt: String,
+    @SerializedName("correct_gate") val correctGate: String, // "Rhombus"
+    @SerializedName("wrong_gates") val wrongGates: List<String>
+)
+
 data class SanctumZone(
     val title: String,
-    @SerializedName("access_key_cost") val keyCost: String,
-    val quests: List<SanctumQuest>
+    val exercises: List<SanctumExercise>
 )
 
-data class SanctumQuest(
-    @SerializedName("quest_id") val questId: String,
-    val type: String, // "cryptex_input", "assertion_reason"
-    @SerializedName("question_text") val questionText: String?,
-    @SerializedName("correct_value") val correctValue: String?,
-
-    // Updated fields for Assertion-Reasoning & Multiple Choice
-    @SerializedName("assertion") val assertion: String?,
-    @SerializedName("reason") val reason: String?,
-    val options: List<String>?,
-    @SerializedName("correct_option_index") val correctOptionIndex: Int?,
-    val explanation: String?,
-
-    @SerializedName("xp_reward") val xpReward: Int
+data class SanctumExercise(
+    @SerializedName("exercise_ref") val exerciseRef: String, // "Ex 8.1 Q7"
+    val task: String,
+    @SerializedName("tool_required") val toolRequired: String // "parallel_line_tool", "bisector_tool"
 )

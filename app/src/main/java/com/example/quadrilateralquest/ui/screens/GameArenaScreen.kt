@@ -10,8 +10,6 @@ import androidx.compose.ui.unit.dp
 import com.example.quadrilateralquest.data.ContentRepository
 import com.example.quadrilateralquest.logic.ArenaEngine
 import com.example.quadrilateralquest.logic.GameStage
-import com.example.quadrilateralquest.model.GeometryLevel
-import com.example.quadrilateralquest.model.MechanicType
 
 @Composable
 fun GameArenaScreen(
@@ -71,32 +69,41 @@ fun GameArenaScreen(
                     if (level != null) {
                         ShaperLabView(level) { 
                             engine.completeLevel()
-                            refreshTrigger++
+                            refreshTrigger++ // Force UI Recomposition
                         }
                     } else {
-                        StageCompleteView("Lab Complete! Proceeding...", engine) { refreshTrigger++ }
+                        // Fallback/Transition if level index is odd
+                        engine.completeLevel() 
                     }
                 }
                 
                 GameStage.FRACTAL_FORGE -> {
-                    // Reuse Lab View for now or generic Placeholder
-                    Text("Fractal Forge Under Construction", modifier = Modifier.align(Alignment.Center))
-                    Button(
-                        onClick = { engine.completeLevel(); refreshTrigger++ },
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)
-                    ) { Text("Auto-Build (Debug)") }
+                    val level = engine.getCurrentLevel()
+                    if (level != null) {
+                        FractalForgeView(level) {
+                            engine.completeLevel()
+                            refreshTrigger++
+                        }
+                    } else {
+                         StageCompleteView("Forge Stabilized. Boss Unlocked.", engine) { refreshTrigger++ }
+                    }
                 }
 
                 GameStage.PROOF_ARENA -> {
-                    Text("Proof Arena Boss Fight", modifier = Modifier.align(Alignment.Center))
-                    Button(
-                        onClick = { engine.completeLevel(); refreshTrigger++ },
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(16.dp)
-                    ) { Text("Defeat Boss (Debug)") }
+                    val level = engine.getCurrentLevel()
+                    if (level != null) {
+                        ProofArenaView(level) {
+                            engine.completeLevel()
+                            refreshTrigger++
+                        }
+                    } else {
+                        StageCompleteView("Boss Defeated! Entering Hyper-Loop.", engine) { refreshTrigger++ }
+                    }
                 }
-
+                
+                // (Hyper-Loop and Sanctum placeholders remain "Under Construction" for this step)
                 else -> {
-                    Text("Stage Content Loading...", modifier = Modifier.align(Alignment.Center))
+                    StageCompleteView("Phase 1 Content Complete (Preview)", engine) { }
                 }
             }
         }

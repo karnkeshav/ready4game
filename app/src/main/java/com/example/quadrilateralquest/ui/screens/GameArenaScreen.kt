@@ -22,7 +22,7 @@ fun GameArenaScreen(
     val engine = remember { ArenaEngine() }
     
     // State to trigger UI updates when engine state changes
-    var refreshTrigger by remember { mutableStateOf(0) }
+    var refreshTrigger by remember { mutableIntStateOf(0) }
 
     // Load Data
     LaunchedEffect(fileRef) {
@@ -101,9 +101,29 @@ fun GameArenaScreen(
                     }
                 }
                 
-                // (Hyper-Loop and Sanctum placeholders remain "Under Construction" for this step)
-                else -> {
-                    StageCompleteView("Phase 1 Content Complete (Preview)", engine) { }
+                GameStage.HYPER_LOOP -> {
+                    val runnerZone = engine.activeScroll?.hyperLoop
+                    if (runnerZone != null) {
+                        RunnerView(
+                            zoneData = runnerZone,
+                            onObstaclePass = { success ->
+                                // Engine logic to track streak
+                                if (success) engine.score += 100
+                            },
+                            onComplete = {
+                                engine.completeLevel() // Advance to Sanctum
+                                refreshTrigger++
+                            }
+                        )
+                    } else {
+                        // Fallback if data is missing
+                        StageCompleteView("Hyper-Loop Data Missing", engine) { refreshTrigger++ }
+                    }
+                }
+
+                GameStage.SANCTUM -> {
+                    // Placeholder for Phase 2 Sanctum Implementation
+                    StageCompleteView("Sanctum Unlocked! (Phase 2)", engine) { }
                 }
             }
         }

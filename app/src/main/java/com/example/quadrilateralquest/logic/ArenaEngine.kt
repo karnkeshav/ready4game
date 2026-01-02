@@ -1,86 +1,88 @@
 package com.example.quadrilateralquest.logic
 
-import com.example.quadrilateralquest.model.ChapterGameScroll
+import com.example.quadrilateralquest.model.*
 
-enum class GameZone { ARCADE, BOSS, SANCTUM }
+// The 5 Stages of the Universal Blueprint
+enum class GameStage { SHAPER_LAB, FRACTAL_FORGE, PROOF_ARENA, HYPER_LOOP, SANCTUM }
 
 class ArenaEngine {
 
-    var currentZone: GameZone = GameZone.ARCADE
-    var currentBossHealth: Int = 0
-    var maxBossHealth: Int = 0
-    var sanctumKeys: Int = 0
+    var currentStage: GameStage = GameStage.SHAPER_LAB
+    var activeScroll: ChapterScroll? = null
     
-    // Track player stats for this specific session
-    var sessionScore: Int = 0
-    var sessionErrors: Int = 0
+    // Track progress within the current stage
+    var currentLevelIndex: Int = 0
+    var isStageComplete: Boolean = false
 
-    // Initialize the Arena with data from the Scroll
-    fun loadChapter(scroll: ChapterGameScroll) {
-        // Reset State
-        currentZone = GameZone.ARCADE
-        sessionScore = 0
-        sessionErrors = 0
-        
-        // Setup Boss Stats
-        maxBossHealth = scroll.bossZone.health
-        currentBossHealth = maxBossHealth
-        
-        // Setup Keys (Simulated logic: completing Arcade gives 1 key)
-        sanctumKeys = 0 
+    // Session Stats
+    var score: Int = 0
+    var keystonesEarned: Int = 0
+
+    // Initialize the Engine with the new Chapter Scroll
+    fun loadChapter(scroll: ChapterScroll) {
+        activeScroll = scroll
+        currentStage = GameStage.SHAPER_LAB
+        currentLevelIndex = 0
+        isStageComplete = false
+        score = 0
     }
 
-    fun attackBoss(damageAmount: Int): BossState {
-        currentBossHealth -= damageAmount
-        if (currentBossHealth < 0) currentBossHealth = 0
+    // Returns the current level data based on the active stage
+    fun getCurrentLevel(): GeometryLevel? {
+        val scroll = activeScroll ?: return null
         
-        return if (currentBossHealth == 0) {
-            sanctumKeys++ // Drop a key on boss defeat
-            BossState.DEFEATED
+        val levels = when (currentStage) {
+            GameStage.SHAPER_LAB -> scroll.shaperLab.levels
+            GameStage.FRACTAL_FORGE -> scroll.fractalForge.levels
+            GameStage.PROOF_ARENA -> scroll.proofArena.levels
+            else -> emptyList()
+        }
+        
+        return levels.getOrNull(currentLevelIndex)
+    }
+
+    // Call this when a player solves a puzzle (Drag, Construct, or Prove)
+    fun completeLevel() {
+        val scroll = activeScroll ?: return
+        
+        // Determine total levels in current stage
+        val levelsInStage = when (currentStage) {
+            GameStage.SHAPER_LAB -> scroll.shaperLab.levels.size
+            GameStage.FRACTAL_FORGE -> scroll.fractalForge.levels.size
+            GameStage.PROOF_ARENA -> scroll.proofArena.levels.size
+            else -> 0
+        }
+
+        // Advance Logic
+        if (currentLevelIndex < levelsInStage - 1) {
+            currentLevelIndex++
         } else {
-            BossState.ALIVE
+            completeStage()
         }
     }
 
-    fun unlockSanctum(): Boolean {
-        if (currentZone == GameZone.BOSS && currentBossHealth == 0 && sanctumKeys > 0) {
-            currentZone = GameZone.SANCTUM
-            return true
+    private fun completeStage() {
+        isStageComplete = true
+        // Auto-advance to next stage (Simplified for Phase 1 flow)
+        currentStage = when (currentStage) {
+            GameStage.SHAPER_LAB -> GameStage.FRACTAL_FORGE
+            GameStage.FRACTAL_FORGE -> GameStage.PROOF_ARENA
+            GameStage.PROOF_ARENA -> GameStage.HYPER_LOOP
+            GameStage.HYPER_LOOP -> GameStage.SANCTUM
+            GameStage.SANCTUM -> GameStage.SANCTUM // End of Line for now
         }
-        return false
+        currentLevelIndex = 0 // Reset for new stage
+        isStageComplete = false
     }
 
-    // Helper for UI to display health bar
-    fun getBossHealthPercentage(): Float {
-        if (maxBossHealth == 0) return 0f
-        return currentBossHealth.toFloat() / maxBossHealth.toFloat()
-    }
-
-    // Returns the XP earned if correct, or 0 if wrong
-    fun submitSanctumAnswer(quest: com.example.quadrilateralquest.model.SanctumQuest, userAnswer: String): Int {
-        var isCorrect = false
-
-        if (quest.type == "cryptex_input") {
-            // Normalize string (trim spaces, ignore case)
-            if (userAnswer.trim().equals(quest.correctValue?.trim(), ignoreCase = true)) {
-                isCorrect = true
-            }
-        } else if (quest.type == "assertion_reason") {
-            // User answer is expected to be the index "0", "1", etc.
-            val index = userAnswer.toIntOrNull()
-            if (index != null && index == quest.correctOptionIndex) {
-                isCorrect = true
-            }
-        }
-
-        return if (isCorrect) {
-            sessionScore += quest.xpReward
-            quest.xpReward
+    // Specific Logic for Hyper-Loop (Runner)
+    fun processRunnerInput(obstacle: RunnerObstacle, chosenGate: String): Boolean {
+        return if (chosenGate == obstacle.correctGate) {
+            score += 100
+            true
         } else {
-            sessionErrors++
-            0
+            score -= 50
+            false
         }
     }
 }
-
-enum class BossState { ALIVE, DEFEATED }
